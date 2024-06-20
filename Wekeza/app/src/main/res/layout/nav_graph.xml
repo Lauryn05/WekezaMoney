@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.wekezamoney.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/nav_expense"
+        android:name="com.example.wekezamoney.ui.expense.ExpenseFragment"
+        android:label="@string/menu_expense"
+        tools:layout="@layout/fragment_expense" />
+    <fragment
+        android:id="@+id/nav_budget"
+        android:name="com.example.wekezamoney.ui.budget.BudgetFragment"
+        android:label="@string/menu_budget"
+        tools:layout="@layout/fragment_budget" />
+    <fragment
+        android:id="@+id/nav_goal"
+        android:name="com.example.wekezamoney.ui.goal.GoalFragment"
+        android:label="@string/menu_goal"
+        tools:layout="@layout/fragment_goal" />
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="com.example.wekezamoney.ui.settings.SettingsFragment"
+        android:label="@string/menu_settings"
+        tools:layout="@layout/fragment_settings" />
+
+</navigation>
