@@ -2,32 +2,33 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
     app:startDestination="@id/nav_home">
 
     <fragment
         android:id="@+id/nav_home"
         android:name="com.example.wekezamoney.ui.home.HomeFragment"
-        android:label="@string/menu_home"
+        android:label="Home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/nav_expense"
         android:name="com.example.wekezamoney.ui.expense.ExpenseFragment"
-        android:label="@string/menu_expense"
+        android:label="Expenses"
         tools:layout="@layout/fragment_expense" />
     <fragment
         android:id="@+id/nav_budget"
         android:name="com.example.wekezamoney.ui.budget.BudgetFragment"
-        android:label="@string/menu_budget"
+        android:label="Budget"
         tools:layout="@layout/fragment_budget" />
     <fragment
         android:id="@+id/nav_goal"
         android:name="com.example.wekezamoney.ui.goal.GoalFragment"
-        android:label="@string/menu_goal"
+        android:label="Goals"
         tools:layout="@layout/fragment_goal" />
     <fragment
         android:id="@+id/nav_settings"
         android:name="com.example.wekezamoney.ui.settings.SettingsFragment"
-        android:label="@string/menu_settings"
+        android:label="Settings"
         tools:layout="@layout/fragment_settings" />
 
 </navigation>

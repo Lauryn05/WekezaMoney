@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/budget_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Budget Name" />
+
+    <EditText
+        android:id="@+id/budget_amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/budget_name"
+        android:hint="Amount" />
+
+    <Button
+        android:id="@+id/add_budget_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/budget_amount"
+        android:text="Add Budget" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/budget_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/add_budget_button" />
+</RelativeLayout>

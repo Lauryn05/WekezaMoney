@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/goal_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Goal Name" />
+
+    <EditText
+        android:id="@+id/goal_amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/goal_name"
+        android:hint="Amount" />
+
+    <Button
+        android:id="@+id/add_goal_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/goal_amount"
+        android:text="Add Goal" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/goal_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/add_goal_button" />
+</RelativeLayout>
