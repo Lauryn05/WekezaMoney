@@ -1,4 +1,4 @@
-package com.cns.wekezamoney.ui.budget
+package com.cns.wekezamoney.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cns.wekezamoney.R
+import com.cns.wekezamoney.model.Budget
+import com.cns.wekezamoney.adapters.BudgetAdapter
 
 class BudgetFragment : Fragment() {
 

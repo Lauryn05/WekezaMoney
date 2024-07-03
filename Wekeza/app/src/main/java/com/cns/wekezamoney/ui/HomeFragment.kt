@@ -1,4 +1,4 @@
-package com.cns.wekezamoney.ui.home
+package com.cns.wekezamoney.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
