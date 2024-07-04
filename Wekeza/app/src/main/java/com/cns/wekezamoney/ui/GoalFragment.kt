@@ -1,5 +1,6 @@
 package com.cns.wekezamoney.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -23,6 +24,7 @@ class GoalFragment : Fragment() {
     private lateinit var goalAdapter: GoalAdapter
     private val goalData: MutableList<Goal> = mutableListOf()
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

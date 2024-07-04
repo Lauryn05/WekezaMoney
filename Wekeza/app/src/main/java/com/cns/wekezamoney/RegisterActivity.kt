@@ -1,6 +1,7 @@
 package com.cns.wekezamoney
 
 import DBHelper
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.cns.wekezamoney.databinding.ActivityRegisterBinding
@@ -10,6 +11,7 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
     private lateinit var dbHelper: DBHelper
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)

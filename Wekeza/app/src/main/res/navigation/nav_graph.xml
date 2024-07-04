@@ -7,28 +7,27 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.wekezamoney.ui.home.HomeFragment"
+        android:name="com.cns.wekezamoney.ui.home.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/nav_expense"
-        android:name="com.example.wekezamoney.ui.expense.ExpenseFragment"
+        android:name="com.cns.wekezamoney.ui.ExpenseFragment"
         android:label="Expenses"
         tools:layout="@layout/fragment_expense" />
     <fragment
         android:id="@+id/nav_budget"
-        android:name="com.example.wekezamoney.ui.budget.BudgetFragment"
+        android:name="com.cns.wekezamoney.ui.BudgetFragment"
         android:label="Budget"
         tools:layout="@layout/fragment_budget" />
     <fragment
         android:id="@+id/nav_goal"
-        android:name="com.example.wekezamoney.ui.goal.GoalFragment"
+        android:name="com.cns.wekezamoney.ui.GoalFragment"
         android:label="Goals"
         tools:layout="@layout/fragment_goal" />
     <fragment
         android:id="@+id/nav_settings"
-        android:name="com.example.wekezamoney.ui.settings.SettingsFragment"
+        android:name="com.cns.wekezamoney.ui.SettingsFragment"
         android:label="Settings"
         tools:layout="@layout/fragment_settings" />
-
 </navigation>
