@@ -1,37 +1,40 @@
 package com.cns.wekezamoney
 
-import DBHelper
-import android.annotation.SuppressLint
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.cns.wekezamoney.database.UserDatabase
 import com.cns.wekezamoney.databinding.ActivityRegisterBinding
+import com.cns.wekezamoney.model.User
+import com.cns.wekezamoney.repository.UserRepository
+import com.cns.wekezamoney.viewmodel.UserViewModel
 
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
-    private lateinit var dbHelper: DBHelper
+    private val userViewModel: UserViewModel by viewModels {
+        UserViewModel.Factory(UserRepository(UserDatabase.getDatabase(this).userDao()))
+    }
 
-    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        dbHelper = DBHelper(this)
 
         binding.btnDone.setOnClickListener {
             val username = binding.etUsername.text.toString().trim()
             val password = binding.etPassword.text.toString().trim()
 
             // Insert user into database
-            val userId = dbHelper.addUser(username, password)
-
-            if (userId != -1L) {
-                // Registration successful, handle accordingly
-                finish() // Close registration activity
-            } else {
-                // Handle registration failure
-                binding.tvError.text = "Registration failed"
+            val user = User(0, username, password)
+            userViewModel.insertUser(user) { userId ->
+                if (userId != -1L) {
+                    // Registration successful, handle accordingly
+                    finish() // Close registration activity
+                } else {
+                    // Handle registration failure
+                    binding.tvError.text = "Registration failed"
+                }
             }
         }
     }
