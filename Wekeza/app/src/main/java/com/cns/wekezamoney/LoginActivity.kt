@@ -28,6 +28,8 @@ class LoginActivity : AppCompatActivity() {
             userViewModel.checkUser(username, password) { user ->
                 if (user != null) {
                     // Login successful, proceed to main activity or dashboard
+                    // val intent = Intent(this, MainActivity::class.java)
+                    // startActivity(intent)
                     finish() // Close login activity
                 } else {
                     // Handle incorrect username/password scenario

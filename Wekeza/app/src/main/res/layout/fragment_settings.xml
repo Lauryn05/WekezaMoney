@@ -1,12 +1,33 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:orientation="vertical">
+
+    <!-- User profile section -->
+
+    <!-- Placeholder for user profile details -->
+    <!-- Replace with actual user profile information -->
+
+    <!-- Notification preferences section -->
+    <TextView
+        android:id="@+id/textViewProfile"
+        android:layout_width="match_parent"
+        android:layout_height="84dp"
+        android:padding="16dp"
+        android:text="User Profile"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/textViewNotifications"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Settings"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-</RelativeLayout>
+        android:layout_height="112dp"
+        android:padding="16dp"
+        android:text="Notification Preferences"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <!-- Placeholder for notification preferences -->
+    <!-- Replace with actual notification settings -->
+
+</LinearLayout>

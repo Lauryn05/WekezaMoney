@@ -51,13 +51,11 @@ class GoalFragment : Fragment() {
                     goalData.add(goal)
                     goalAdapter.notifyDataSetChanged()
                 } catch (e: NumberFormatException) {
-                    // Handle if targetAmountString cannot be parsed to Double
-                    // For example, show a toast message
+                    // Handle if targetAmountString cannot be parsed to Double, show toast message
                     Toast.makeText(requireContext(), "Invalid target amount format", Toast.LENGTH_SHORT).show()
                 }
             } else {
-                // Handle if name or targetAmountString is empty
-                // For example, show a toast message
+                // Handle if name or targetAmountString is empty by showing a toast message
                 Toast.makeText(requireContext(), "Name and target amount cannot be empty", Toast.LENGTH_SHORT).show()
             }
         }

@@ -11,6 +11,8 @@ junit = "4.13.2"
 junitVersion = "1.1.5"
 espressoCore = "3.5.1"
 appcompat = "1.6.1"
+kotlinxCoroutinesAndroid = "1.6.0"
+kotlinxCoroutinesCore = "1.6.0"
 lifecycleLivedataKtxVersion = "2.5.1"
 lifecycleViewmodelKtxVersion = "2.5.1"
 material = "1.12.0"
@@ -25,6 +27,9 @@ navigationFragmentKtxVersion = "2.5.3"
 navigationUiKtx = "2.6.0"
 navigationUiKtxVersion = "2.3.5"
 androidxRoom = "2.5.0"
+roomCompiler = "2.4.3"
+roomKtx = "2.4.3"
+roomRuntime = "2.4.3"
 
 [libraries]
 androidx-appcompat-v130 = { module = "androidx.appcompat:appcompat", version.ref = "appcompatVersion" }
@@ -37,6 +42,9 @@ androidx-navigation-fragment = { module = "androidx.navigation:navigation-fragme
 androidx-navigation-fragment-ktx-v253 = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigationFragmentKtxVersion" }
 androidx-navigation-ui-ktx-v235 = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigationUiKtxVersion" }
 androidx-navigation-ui-ktx-v253 = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "androidxNavigationUiKtx" }
+androidx-room-compiler-v243 = { module = "androidx.room:room-compiler", version.ref = "roomCompiler" }
+androidx-room-ktx-v243 = { module = "androidx.room:room-ktx", version.ref = "roomKtx" }
+androidx-room-runtime-v243 = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
 appcompat = { module = "androidx.appcompat:appcompat" }
 constraintlayout = { module = "androidx.constraintlayout:constraintlayout" }
 core-ktx = { module = "androidx.core:core-ktx" }
@@ -46,6 +54,8 @@ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-co
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 kotlin-android-extensions = { module = "org.jetbrains.kotlin:kotlin-android-extensions" }
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib" }
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesAndroid" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCore" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 androidx-lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }

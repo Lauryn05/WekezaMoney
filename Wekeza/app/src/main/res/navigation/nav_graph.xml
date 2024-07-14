@@ -1,33 +1,35 @@
-<?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"
-    app:startDestination="@id/nav_home">
+    app:startDestination="@id/settingsFragment">
 
     <fragment
-        android:id="@+id/nav_home"
-        android:name="com.cns.wekezamoney.ui.home.HomeFragment"
-        android:label="Home"
-        tools:layout="@layout/fragment_home" />
-    <fragment
-        android:id="@+id/nav_expense"
-        android:name="com.cns.wekezamoney.ui.ExpenseFragment"
-        android:label="Expenses"
-        tools:layout="@layout/fragment_expense" />
-    <fragment
-        android:id="@+id/nav_budget"
-        android:name="com.cns.wekezamoney.ui.BudgetFragment"
-        android:label="Budget"
-        tools:layout="@layout/fragment_budget" />
-    <fragment
-        android:id="@+id/nav_goal"
-        android:name="com.cns.wekezamoney.ui.GoalFragment"
-        android:label="Goals"
-        tools:layout="@layout/fragment_goal" />
-    <fragment
-        android:id="@+id/nav_settings"
+        android:id="@+id/settingsFragment"
         android:name="com.cns.wekezamoney.ui.SettingsFragment"
-        android:label="Settings"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_settings">
+        <action
+            android:id="@+id/action_settingsFragment_to_expenseFragment"
+            app:destination="@id/expenseFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_budgetFragment"
+            app:destination="@id/budgetFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_goalFragment"
+            app:destination="@id/goalFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/expenseFragment"
+        android:name="com.cns.wekezamoney.ui.ExpenseFragment"
+        tools:layout="@layout/fragment_expense" />
+
+    <fragment
+        android:id="@+id/budgetFragment"
+        android:name="com.cns.wekezamoney.ui.BudgetFragment"
+        tools:layout="@layout/fragment_budget" />
+
+    <fragment
+        android:id="@+id/goalFragment"
+        android:name="com.cns.wekezamoney.ui.GoalFragment"
+        tools:layout="@layout/fragment_goal" />
 </navigation>

@@ -1,5 +1,6 @@
 package com.cns.wekezamoney
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -29,7 +30,9 @@ class RegisterActivity : AppCompatActivity() {
             val user = User(0, username, password)
             userViewModel.insertUser(user) { userId ->
                 if (userId != -1L) {
-                    // Registration successful, handle accordingly
+                    // Registration successful, navigate to LoginActivity
+                    val intent = Intent(this, LoginActivity::class.java)
+                    startActivity(intent)
                     finish() // Close registration activity
                 } else {
                     // Handle registration failure
