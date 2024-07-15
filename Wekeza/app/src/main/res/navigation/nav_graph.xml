@@ -1,7 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/settingsFragment">
+    app:startDestination="@id/budgetFragment">
 
     <fragment
         android:id="@+id/settingsFragment"
@@ -21,15 +22,46 @@
     <fragment
         android:id="@+id/expenseFragment"
         android:name="com.cns.wekezamoney.ui.ExpenseFragment"
-        tools:layout="@layout/fragment_expense" />
+        tools:layout="@layout/fragment_expense">
+        <action
+            android:id="@+id/action_expenseFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_expenseFragment_to_budgetFragment"
+            app:destination="@id/budgetFragment" />
+        <action
+            android:id="@+id/action_expenseFragment_to_goalFragment"
+            app:destination="@id/goalFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/budgetFragment"
         android:name="com.cns.wekezamoney.ui.BudgetFragment"
-        tools:layout="@layout/fragment_budget" />
+        tools:layout="@layout/fragment_budget">
+        <action
+            android:id="@+id/action_budgetFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_budgetFragment_to_expenseFragment"
+            app:destination="@id/expenseFragment" />
+        <action
+            android:id="@+id/action_budgetFragment_to_goalFragment"
+            app:destination="@id/goalFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/goalFragment"
         android:name="com.cns.wekezamoney.ui.GoalFragment"
-        tools:layout="@layout/fragment_goal" />
+        tools:layout="@layout/fragment_goal">
+        <action
+            android:id="@+id/action_goalFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_goalFragment_to_expenseFragment"
+            app:destination="@id/expenseFragment" />
+        <action
+            android:id="@+id/action_goalFragment_to_budgetFragment"
+            app:destination="@id/budgetFragment" />
+    </fragment>
+
 </navigation>

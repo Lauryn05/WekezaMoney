@@ -1,9 +1,11 @@
 package com.cns.wekezamoney.database
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import com.cns.wekezamoney.model.User
 
 class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
@@ -11,152 +13,142 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         const val DATABASE_NAME = "wekeza_db"
         const val DATABASE_VERSION = 1
 
-        // Expenses table and columns
-        const val TABLE_EXPENSES = "expenses"
-        const val COLUMN_EXPENSE_ID = "id"
-        const val COLUMN_EXPENSE_NAME = "name"
-        const val COLUMN_EXPENSE_AMOUNT = "amount"
+        // Users table and columns
+        const val TABLE_USERS = "users"
+        const val COLUMN_USER_ID = "id"
+        const val COLUMN_USER_USERNAME = "username"
+        const val COLUMN_USER_PASSWORD = "password"
 
-        // Budgets table and columns
-        const val TABLE_BUDGETS = "budgets"
-        const val COLUMN_BUDGET_ID = "id"
-        const val COLUMN_BUDGET_NAME = "name"
-        const val COLUMN_BUDGET_AMOUNT = "amount"
-
-        // Goals table and columns
-        const val TABLE_GOALS = "goals"
-        const val COLUMN_GOAL_ID = "id"
-        const val COLUMN_GOAL_NAME = "name"
-        const val COLUMN_GOAL_AMOUNT = "amount"
-        const val COLUMN_GOAL_DATE = "date"
+        // Notifications table and columns
+        const val TABLE_NOTIFICATIONS = "notifications"
+        const val COLUMN_NOTIFICATION_ID = "id"
+        const val COLUMN_NOTIFICATION_USER_ID = "user_id"
+        const val COLUMN_NOTIFICATION_ENABLED = "enabled"
     }
 
     override fun onCreate(db: SQLiteDatabase) {
-        val CREATE_EXPENSES_TABLE = ("CREATE TABLE $TABLE_EXPENSES (" +
-                "$COLUMN_EXPENSE_ID INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "$COLUMN_EXPENSE_NAME TEXT," +
-                "$COLUMN_EXPENSE_AMOUNT REAL)")
+        val CREATE_USERS_TABLE = ("CREATE TABLE $TABLE_USERS (" +
+                "$COLUMN_USER_ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "$COLUMN_USER_USERNAME TEXT," +
+                "$COLUMN_USER_PASSWORD TEXT)")
 
-        val CREATE_BUDGETS_TABLE = ("CREATE TABLE $TABLE_BUDGETS (" +
-                "$COLUMN_BUDGET_ID INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "$COLUMN_BUDGET_NAME TEXT," +
-                "$COLUMN_BUDGET_AMOUNT REAL)")
+        val CREATE_NOTIFICATIONS_TABLE = ("CREATE TABLE $TABLE_NOTIFICATIONS (" +
+                "$COLUMN_NOTIFICATION_ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "$COLUMN_NOTIFICATION_USER_ID INTEGER," +
+                "$COLUMN_NOTIFICATION_ENABLED INTEGER)")
 
-        val CREATE_GOALS_TABLE = ("CREATE TABLE $TABLE_GOALS (" +
-                "$COLUMN_GOAL_ID INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "$COLUMN_GOAL_NAME TEXT," +
-                "$COLUMN_GOAL_AMOUNT REAL," +
-                "$COLUMN_GOAL_DATE TEXT)")
-
-        db.execSQL(CREATE_EXPENSES_TABLE)
-        db.execSQL(CREATE_BUDGETS_TABLE)
-        db.execSQL(CREATE_GOALS_TABLE)
+        db.execSQL(CREATE_USERS_TABLE)
+        db.execSQL(CREATE_NOTIFICATIONS_TABLE)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         db.run {
-            execSQL("DROP TABLE IF EXISTS $TABLE_EXPENSES")
-            execSQL("DROP TABLE IF EXISTS $TABLE_BUDGETS")
-            execSQL("DROP TABLE IF EXISTS $TABLE_GOALS")
+            execSQL("DROP TABLE IF EXISTS $TABLE_USERS")
+            execSQL("DROP TABLE IF EXISTS $TABLE_NOTIFICATIONS")
             onCreate(this)
         }
     }
 
-    fun addExpense(name: String, amount: Double): Long {
+    // User operations
+
+    fun addUser(username: String, password: String): Long {
         val db = this.writableDatabase
         val values = ContentValues().apply {
-            put(COLUMN_EXPENSE_NAME, name)
-            put(COLUMN_EXPENSE_AMOUNT, amount)
+            put(COLUMN_USER_USERNAME, username)
+            put(COLUMN_USER_PASSWORD, password)
         }
 
-        val id = db.insert(TABLE_EXPENSES, null, values)
+        val id = db.insert(TABLE_USERS, null, values)
         db.close()
         return id
     }
 
-    fun addBudget(name: String, amount: Double): Long {
+    fun updateUser(username: String, password: String): Int {
         val db = this.writableDatabase
         val values = ContentValues().apply {
-            put(COLUMN_BUDGET_NAME, name)
-            put(COLUMN_BUDGET_AMOUNT, amount)
+            put(COLUMN_USER_PASSWORD, password)
         }
 
-        val id = db.insert(TABLE_BUDGETS, null, values)
+        val rowsUpdated = db.update(TABLE_USERS, values, "$COLUMN_USER_USERNAME = ?", arrayOf(username))
+        db.close()
+        return rowsUpdated
+    }
+
+    @SuppressLint("Range")
+    fun getUser(username: String): User? {
+        val db = this.readableDatabase
+        var user: User? = null
+        val cursor = db.query(
+            TABLE_USERS,
+            null,
+            "$COLUMN_USER_USERNAME = ?",
+            arrayOf(username),
+            null,
+            null,
+            null
+        )
+
+        if (cursor.moveToFirst()) {
+            user = User(
+                id = cursor.getLong(cursor.getColumnIndex(COLUMN_USER_ID)),
+                username = cursor.getString(cursor.getColumnIndex(COLUMN_USER_USERNAME)),
+                password = cursor.getString(cursor.getColumnIndex(COLUMN_USER_PASSWORD))
+            )
+        }
+        cursor.close()
+        db.close()
+        return user
+    }
+
+    // Notification operations
+
+    fun enableNotifications(userId: Long): Long {
+        val db = this.writableDatabase
+        val values = ContentValues().apply {
+            put(COLUMN_NOTIFICATION_USER_ID, userId)
+            put(COLUMN_NOTIFICATION_ENABLED, 1)
+        }
+
+        val id = db.insert(TABLE_NOTIFICATIONS, null, values)
         db.close()
         return id
     }
 
-    fun addGoal(name: String, amount: Double, date: String): Long {
+    fun disableNotifications(userId: Long): Int {
         val db = this.writableDatabase
         val values = ContentValues().apply {
-            put(COLUMN_GOAL_NAME, name)
-            put(COLUMN_GOAL_AMOUNT, amount)
-            put(COLUMN_GOAL_DATE, date)
+            put(COLUMN_NOTIFICATION_ENABLED, 0)
         }
 
-        val id = db.insert(TABLE_GOALS, null, values)
+        val rowsUpdated = db.update(
+            TABLE_NOTIFICATIONS,
+            values,
+            "$COLUMN_NOTIFICATION_USER_ID = ?",
+            arrayOf(userId.toString())
+        )
         db.close()
-        return id
+        return rowsUpdated
     }
 
-    fun getExpenses(): List<Map<String, Any>> {
+    @SuppressLint("Range")
+    fun areNotificationsEnabled(userId: String): Boolean {
         val db = this.readableDatabase
-        val cursor = db.query(TABLE_EXPENSES, null, null, null, null, null, null)
-        val expenses = mutableListOf<Map<String, Any>>()
+        var enabled = false
+        val cursor = db.query(
+            TABLE_NOTIFICATIONS,
+            null,
+            "$COLUMN_NOTIFICATION_USER_ID = ?",
+            arrayOf(userId.toString()),
+            null,
+            null,
+            null
+        )
 
         if (cursor.moveToFirst()) {
-            do {
-                val expense = mapOf(
-                    COLUMN_EXPENSE_ID to cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_EXPENSE_ID)),
-                    COLUMN_EXPENSE_NAME to cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EXPENSE_NAME)),
-                    COLUMN_EXPENSE_AMOUNT to cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_EXPENSE_AMOUNT))
-                )
-                expenses.add(expense)
-            } while (cursor.moveToNext())
+            enabled = cursor.getInt(cursor.getColumnIndex(COLUMN_NOTIFICATION_ENABLED)) == 1
         }
         cursor.close()
         db.close()
-        return expenses
-    }
-
-    fun getBudgets(): List<Map<String, Any>> {
-        val db = this.readableDatabase
-        val cursor = db.query(TABLE_BUDGETS, null, null, null, null, null, null)
-        val budgets = mutableListOf<Map<String, Any>>()
-
-        if (cursor.moveToFirst()) {
-            do {
-                val budget = mapOf(
-                    COLUMN_BUDGET_ID to cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_BUDGET_ID)),
-                    COLUMN_BUDGET_NAME to cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BUDGET_NAME)),
-                    COLUMN_BUDGET_AMOUNT to cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_BUDGET_AMOUNT))
-                )
-                budgets.add(budget)
-            } while (cursor.moveToNext())
-        }
-        cursor.close()
-        db.close()
-        return budgets
-    }
-
-    fun getGoals(): List<Map<String, Any>> {
-        val db = this.readableDatabase
-        val cursor = db.query(TABLE_GOALS, null, null, null, null, null, null)
-        val goals = mutableListOf<Map<String, Any>>()
-
-        if (cursor.moveToFirst()) {
-            do {
-                val goal = mapOf(
-                    COLUMN_GOAL_ID to cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_GOAL_ID)),
-                    COLUMN_GOAL_NAME to cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_GOAL_NAME)),
-                    COLUMN_GOAL_AMOUNT to cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_GOAL_AMOUNT)),
-                    COLUMN_GOAL_DATE to cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_GOAL_DATE))
-                )
-                goals.add(goal)
-            } while (cursor.moveToNext())
-        }
-        cursor.close()
-        db.close()
-        return goals
+        return enabled
     }
 }

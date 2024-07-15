@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp">
@@ -8,21 +9,27 @@
         android:id="@+id/goal_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Goal Name" />
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="80dp"
+        android:autofillHints=""
+        android:hint="@string/goal_name"
+        tools:ignore="TextFields,TouchTargetSizeCheck,VisualLintTextFieldSize" />
 
     <EditText
         android:id="@+id/goal_amount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/goal_name"
-        android:hint="Amount" />
+        android:layout_marginTop="9dp"
+        android:hint="@string/amount_goal"
+        tools:ignore="Autofill,TextFields,TouchTargetSizeCheck,VisualLintTextFieldSize" />
 
     <Button
         android:id="@+id/add_goal_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/goal_amount"
-        android:text="Add Goal" />
+        android:text="@string/add_goal" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/goal_list"

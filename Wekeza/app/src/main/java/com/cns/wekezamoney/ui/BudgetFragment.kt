@@ -7,14 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import androidx.fragment.app.Fragment
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cns.wekezamoney.R
-import com.cns.wekezamoney.model.Budget
 import com.cns.wekezamoney.adapters.BudgetAdapter
+import com.cns.wekezamoney.model.Budget
 
-class BudgetFragment : Fragment() {
+class BudgetFragment : BaseFragment() {
 
     private lateinit var budgetName: EditText
     private lateinit var budgetAmount: EditText
@@ -43,9 +43,15 @@ class BudgetFragment : Fragment() {
             val name = budgetName.text.toString()
             val amount = budgetAmount.text.toString()
             if (name.isNotEmpty() && amount.isNotEmpty()) {
-                val budget = Budget(name, amount.toDouble())
-                budgetData.add(budget)
-                budgetAdapter.notifyDataSetChanged()
+                try {
+                    val budget = Budget(name, amount.toDouble())
+                    budgetData.add(budget)
+                    budgetAdapter.notifyDataSetChanged()
+                } catch (e: NumberFormatException) {
+                    Toast.makeText(requireContext(), "Invalid budget amount format", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(requireContext(), "Name and budget amount cannot be empty", Toast.LENGTH_SHORT).show()
             }
         }
 

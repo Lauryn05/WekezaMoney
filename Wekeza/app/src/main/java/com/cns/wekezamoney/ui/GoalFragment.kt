@@ -8,14 +8,13 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cns.wekezamoney.R
 import com.cns.wekezamoney.adapters.GoalAdapter
 import com.cns.wekezamoney.model.Goal
 
-class GoalFragment : Fragment() {
+class GoalFragment : BaseFragment() {
 
     private lateinit var goalName: EditText
     private lateinit var goalAmount: EditText

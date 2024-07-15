@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp">
@@ -8,25 +9,31 @@
         android:id="@+id/budget_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Budget Name" />
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="63dp"
+        android:hint="@string/budget_name"
+        tools:ignore="Autofill,TextFields,TouchTargetSizeCheck,VisualLintTextFieldSize" />
 
     <EditText
         android:id="@+id/budget_amount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/budget_name"
-        android:hint="Amount" />
+        android:layout_marginTop="-3dp"
+        android:hint="@string/amount"
+        tools:ignore="Autofill,TextFields,TouchTargetSizeCheck,VisualLintTextFieldSize" />
 
     <Button
         android:id="@+id/add_budget_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/budget_amount"
-        android:text="Add Budget" />
+        android:text="@string/add_budget" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/budget_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/add_budget_button" />
+        android:layout_below="@id/add_budget_button"
+        android:layout_marginTop="23dp" />
 </RelativeLayout>
