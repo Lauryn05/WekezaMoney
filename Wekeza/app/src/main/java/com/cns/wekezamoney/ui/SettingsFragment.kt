@@ -9,13 +9,17 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Switch
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.cns.wekezamoney.R
-import com.cns.wekezamoney.R.id.username_edit_text
-import com.cns.wekezamoney.database.DBHelper
+import com.cns.wekezamoney.model.User
+import com.cns.wekezamoney.repository.UserRepository
+import com.cns.wekezamoney.database.UserDatabase
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
+@OptIn(DelicateCoroutinesApi::class)
 class SettingsFragment : BaseFragment() {
 
     private lateinit var usernameEditText: EditText
@@ -23,7 +27,7 @@ class SettingsFragment : BaseFragment() {
     private lateinit var saveProfileButton: Button
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     private lateinit var enableNotificationsSwitch: Switch
-    private lateinit var dbHelper: DBHelper
+    private lateinit var userRepository: UserRepository
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,12 +35,13 @@ class SettingsFragment : BaseFragment() {
     ): View? {
         val root = inflater.inflate(R.layout.fragment_settings, container, false)
 
-        usernameEditText = root.findViewById(username_edit_text)
+        usernameEditText = root.findViewById(R.id.username_edit_text)
         passwordEditText = root.findViewById(R.id.password_edit_text)
         saveProfileButton = root.findViewById(R.id.save_profile_button)
         enableNotificationsSwitch = root.findViewById(R.id.enable_notifications_switch)
 
-        dbHelper = DBHelper(requireContext())
+        val userDao = UserDatabase.getDatabase(requireContext()).userDao()
+        userRepository = UserRepository(userDao)
 
         // Load user profile information
         loadUserProfile()
@@ -57,13 +62,12 @@ class SettingsFragment : BaseFragment() {
         }
 
         enableNotificationsSwitch.setOnCheckedChangeListener { _, isChecked ->
-            val username = usernameEditText.text.toString().trim()
             if (isChecked) {
                 // Enable notifications
-                enableNotifications(username)
+                enableNotifications()
             } else {
                 // Disable notifications
-                disableNotifications(username)
+                disableNotifications()
             }
         }
 
@@ -72,17 +76,22 @@ class SettingsFragment : BaseFragment() {
 
     private fun loadUserProfile() {
         GlobalScope.launch(Dispatchers.Main) {
-            val user = dbHelper.getUser("current_username") // Replace "current_username" with actual logic to get current user
-            user?.let {
+            val currentUser = getCurrentUser() // Fetch current user from Room
+            currentUser?.let {
                 usernameEditText.setText(it.username)
                 passwordEditText.setText(it.password)
             }
         }
     }
 
+    private suspend fun getCurrentUser(): User? {
+        // get current user's credentials
+        return userRepository.checkUser("current_username", "current_password")
+    }
+
     private fun updateUserProfile(username: String, password: String) {
         GlobalScope.launch(Dispatchers.IO) {
-            val rowsUpdated = dbHelper.updateUser(username, password)
+            val rowsUpdated = userRepository.updateUser(User(0, username, password))
             if (rowsUpdated > 0) {
                 Toast.makeText(requireContext(), "Profile updated successfully", Toast.LENGTH_SHORT).show()
             } else {
@@ -93,17 +102,19 @@ class SettingsFragment : BaseFragment() {
 
     private fun loadNotificationPreferences() {
         GlobalScope.launch(Dispatchers.Main) {
-            val username = usernameEditText.text.toString().trim()
-            val notificationsEnabled = dbHelper.areNotificationsEnabled(username)
-            enableNotificationsSwitch.isChecked = notificationsEnabled
+            val currentUser = getCurrentUser()
+            currentUser?.let {
+                val notificationsEnabled = userRepository.areNotificationsEnabled(it.id.toString())
+                enableNotificationsSwitch.isChecked = notificationsEnabled
+            }
         }
     }
 
-    private fun enableNotifications(username: String) {
+    private fun enableNotifications() {
         GlobalScope.launch(Dispatchers.IO) {
-            val user = dbHelper.getUser(username)
-            user?.let {
-                val id = dbHelper.enableNotifications(it.id)
+            val currentUser = getCurrentUser()
+            currentUser?.let {
+                val id = userRepository.enableNotifications(it.id)
                 if (id > 0) {
                     Toast.makeText(requireContext(), "Notifications enabled", Toast.LENGTH_SHORT).show()
                 } else {
@@ -113,11 +124,11 @@ class SettingsFragment : BaseFragment() {
         }
     }
 
-    private fun disableNotifications(username: String) {
+    private fun disableNotifications() {
         GlobalScope.launch(Dispatchers.IO) {
-            val user = dbHelper.getUser(username)
-            user?.let {
-                val rowsUpdated = dbHelper.disableNotifications(it.id)
+            val currentUser = getCurrentUser()
+            currentUser?.let {
+                val rowsUpdated = userRepository.disableNotifications(it.id)
                 if (rowsUpdated > 0) {
                     Toast.makeText(requireContext(), "Notifications disabled", Toast.LENGTH_SHORT).show()
                 } else {

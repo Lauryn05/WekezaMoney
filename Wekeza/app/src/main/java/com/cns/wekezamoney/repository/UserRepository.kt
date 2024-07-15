@@ -2,6 +2,7 @@ package com.cns.wekezamoney.repository
 
 import com.cns.wekezamoney.dao.UserDao
 import com.cns.wekezamoney.model.User
+import com.cns.wekezamoney.model.Notification
 
 class UserRepository(private val userDao: UserDao) {
 
@@ -11,5 +12,23 @@ class UserRepository(private val userDao: UserDao) {
 
     suspend fun checkUser(username: String, password: String): User? {
         return userDao.checkUser(username, password)
+    }
+
+    suspend fun enableNotifications(userId: Long): Long {
+        val notification = Notification(userId, enabled = true)
+        return userDao.insertNotification(notification)
+    }
+
+    suspend fun disableNotifications(userId: Long): Int {
+        val notification = Notification(userId, enabled = false)
+        return userDao.updateNotification(notification)
+    }
+
+    suspend fun areNotificationsEnabled(userId: String): Boolean {
+        return userDao.areNotificationsEnabled(userId)
+    }
+
+    suspend fun updateUser(user: User): Int {
+        return userDao.updateUser(user)
     }
 }

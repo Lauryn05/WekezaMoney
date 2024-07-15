@@ -4,9 +4,11 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.cns.wekezamoney.dao.UserDao
+import com.cns.wekezamoney.model.Notification
 import com.cns.wekezamoney.model.User
 
-@Database(entities = [User::class], version = 1, exportSchema = false)
+@Database(entities = [User::class, Notification::class], version = 1)
 abstract class UserDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
 
