@@ -34,7 +34,7 @@ class LoginActivity : AppCompatActivity() {
                 } else {
                     // Handle incorrect username/password scenario
                     binding.tvError.visibility = View.VISIBLE
-                    binding.tvError.text = "Invalid credentials"
+                    binding.tvError.text = getString(R.string.invalid_credentials)
                 }
             }
         }

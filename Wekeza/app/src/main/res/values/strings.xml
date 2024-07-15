@@ -41,4 +41,6 @@
     <string name="goal_name">Goal Name</string>
     <string name="amount_goal">Amount</string>
     <string name="add_goal">Add Goal</string>
+    <string name="invalid_credentials">Invalid credentials</string>
+    <string name="registration_failed">Registration failed</string>
 </resources>

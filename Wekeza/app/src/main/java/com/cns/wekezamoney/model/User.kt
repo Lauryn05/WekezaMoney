@@ -6,14 +6,13 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "user")
 data class User(
-    @PrimaryKey(autoGenerate = true) val id: Int,
+    @PrimaryKey(autoGenerate = true) val id: Long,
     @ColumnInfo(name = "username") val username: String,
     @ColumnInfo(name = "password") val password: String
 )
 
 @Entity(tableName = "notifications")
 data class Notification(
-    @PrimaryKey(autoGenerate = true) val id: Int,
-    @ColumnInfo(name = "userId") val userId: Int,
-    @ColumnInfo(name = "enabled") val enabled: Boolean
+    @PrimaryKey val userId: Long,
+    val enabled: Boolean
 )

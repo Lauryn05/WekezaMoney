@@ -25,21 +25,21 @@ class UserViewModel(private val userRepository: UserRepository) : ViewModel() {
 
     fun enableNotifications(userId: Long, onResult: (Long) -> Unit) {
         viewModelScope.launch {
-            val result = userRepository.enableNotifications(userId)
+            val result = userRepository.enableNotifications(userId.toInt())
             onResult(result)
         }
     }
 
     fun disableNotifications(userId: Long, onResult: (Int) -> Unit) {
         viewModelScope.launch {
-            val result = userRepository.disableNotifications(userId)
+            val result = userRepository.disableNotifications(userId.toInt())
             onResult(result)
         }
     }
 
     fun areNotificationsEnabled(userId: Long, onResult: (Boolean) -> Unit) {
         viewModelScope.launch {
-            val result = userRepository.areNotificationsEnabled(userId)
+            val result = userRepository.areNotificationsEnabled(userId.toInt())
             onResult(result)
         }
     }

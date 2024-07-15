@@ -11,14 +11,14 @@ import com.cns.wekezamoney.model.Notification
 @Dao
 interface UserDao {
 
-    @Query(value = "SELECT * FROM user WHERE username = :username AND password = :password")
-    suspend fun checkUser(username: String, password: String): User?
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUser(user: User): Long
 
-    @Update
-    suspend fun updateUser(user: User): Int
+    @Query("SELECT * FROM user WHERE username = :username AND password = :password LIMIT 1")
+    suspend fun checkUser(username: String, password: String): User?
+
+    @Query("SELECT * FROM user WHERE id = :userId LIMIT 1")
+    suspend fun getUserById(userId: Long): User?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertNotification(notification: Notification): Long
@@ -26,6 +26,9 @@ interface UserDao {
     @Update
     suspend fun updateNotification(notification: Notification): Int
 
-    @Query(value = "SELECT enabled FROM notifications WHERE userId = :userId")
-    suspend fun areNotificationsEnabled(userId: Int): Boolean
+    @Query("SELECT enabled FROM notifications WHERE userId = :userId LIMIT 1")
+    suspend fun areNotificationsEnabled(userId: Long): Boolean
+
+    @Update
+    suspend fun updateUser(user: User): Int
 }

@@ -1,6 +1,7 @@
 package com.cns.wekezamoney.ui
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,15 +10,11 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Switch
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import com.cns.wekezamoney.R
 import com.cns.wekezamoney.model.User
 import com.cns.wekezamoney.repository.UserRepository
 import com.cns.wekezamoney.database.UserDatabase
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 @OptIn(DelicateCoroutinesApi::class)
 class SettingsFragment : BaseFragment() {
@@ -85,17 +82,31 @@ class SettingsFragment : BaseFragment() {
     }
 
     private suspend fun getCurrentUser(): User? {
-        // get current user's credentials
-        return userRepository.checkUser("current_username", "current_password")
+        val sharedPreferences = requireContext().getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+        val userId = sharedPreferences.getLong("current_user_id", -1L)
+
+        return if (userId != -1L) {
+            withContext(Dispatchers.IO) {
+                userRepository.getUserById(userId)
+            }
+        } else {
+            null
+        }
     }
 
     private fun updateUserProfile(username: String, password: String) {
         GlobalScope.launch(Dispatchers.IO) {
-            val rowsUpdated = userRepository.updateUser(User(0, username, password))
-            if (rowsUpdated > 0) {
-                Toast.makeText(requireContext(), "Profile updated successfully", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(requireContext(), "Failed to update profile", Toast.LENGTH_SHORT).show()
+            val sharedPreferences = requireContext().getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+            val userId = sharedPreferences.getLong("current_user_id", -1L)
+            if (userId != -1L) {
+                val rowsUpdated = userRepository.updateUser(User(userId, username, password))
+                withContext(Dispatchers.Main) {
+                    if (rowsUpdated > 0) {
+                        Toast.makeText(requireContext(), "Profile updated successfully", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(requireContext(), "Failed to update profile", Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
         }
     }
@@ -104,7 +115,9 @@ class SettingsFragment : BaseFragment() {
         GlobalScope.launch(Dispatchers.Main) {
             val currentUser = getCurrentUser()
             currentUser?.let {
-                val notificationsEnabled = userRepository.areNotificationsEnabled(it.id.toString())
+                val notificationsEnabled = withContext(Dispatchers.IO) {
+                    userRepository.areNotificationsEnabled(it.id.toInt())
+                }
                 enableNotificationsSwitch.isChecked = notificationsEnabled
             }
         }
@@ -114,11 +127,13 @@ class SettingsFragment : BaseFragment() {
         GlobalScope.launch(Dispatchers.IO) {
             val currentUser = getCurrentUser()
             currentUser?.let {
-                val id = userRepository.enableNotifications(it.id)
-                if (id > 0) {
-                    Toast.makeText(requireContext(), "Notifications enabled", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(requireContext(), "Failed to enable notifications", Toast.LENGTH_SHORT).show()
+                val id = userRepository.enableNotifications(it.id.toInt())
+                withContext(Dispatchers.Main) {
+                    if (id > 0) {
+                        Toast.makeText(requireContext(), "Notifications enabled", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(requireContext(), "Failed to enable notifications", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }
@@ -128,11 +143,13 @@ class SettingsFragment : BaseFragment() {
         GlobalScope.launch(Dispatchers.IO) {
             val currentUser = getCurrentUser()
             currentUser?.let {
-                val rowsUpdated = userRepository.disableNotifications(it.id)
-                if (rowsUpdated > 0) {
-                    Toast.makeText(requireContext(), "Notifications disabled", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(requireContext(), "Failed to disable notifications", Toast.LENGTH_SHORT).show()
+                val rowsUpdated = userRepository.disableNotifications(it.id.toInt())
+                withContext(Dispatchers.Main) {
+                    if (rowsUpdated > 0) {
+                        Toast.makeText(requireContext(), "Notifications disabled", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(requireContext(), "Failed to disable notifications", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }

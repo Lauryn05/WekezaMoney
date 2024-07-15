@@ -36,7 +36,7 @@ class RegisterActivity : AppCompatActivity() {
                     finish() // Close registration activity
                 } else {
                     // Handle registration failure
-                    binding.tvError.text = "Registration failed"
+                    binding.tvError.text = getString(R.string.registration_failed)
                 }
             }
         }
