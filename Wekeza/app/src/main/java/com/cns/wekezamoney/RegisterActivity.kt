@@ -1,18 +1,44 @@
 package com.cns.wekezamoney
 
+import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_register.*
+import com.cns.wekezamoney.database.UserDatabase
+import com.cns.wekezamoney.databinding.ActivityRegisterBinding
+import com.cns.wekezamoney.model.User
+import com.cns.wekezamoney.repository.UserRepository
+import com.cns.wekezamoney.viewmodel.UserViewModel
 
 class RegisterActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityRegisterBinding
+    private val userViewModel: UserViewModel by viewModels {
+        UserViewModel.Factory(UserRepository(UserDatabase.getDatabase(this).userDao()))
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_register)
+        binding = ActivityRegisterBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        btn_done.setOnClickListener {
-            // Handle registration logic here
-            finish()
+        binding.btnDone.setOnClickListener {
+            val username = binding.etUsername.text.toString().trim()
+            val password = binding.etPassword.text.toString().trim()
+
+            // Insert user into database
+            val user = User(0, username, password)
+            userViewModel.insertUser(user) { userId ->
+                if (userId != -1L) {
+                    // Registration successful, navigate to LoginActivity
+                    val intent = Intent(this, LoginActivity::class.java)
+                    startActivity(intent)
+                    finish() // Close registration activity
+                } else {
+                    // Handle registration failure
+                    binding.tvError.text = "Registration failed"
+                }
+            }
         }
     }
 }

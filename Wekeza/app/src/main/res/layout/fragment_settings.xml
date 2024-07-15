@@ -1,12 +1,72 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:orientation="vertical">
 
     <TextView
+        android:id="@+id/textViewSettings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Settings"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-</RelativeLayout>
+        android:padding="16dp"
+        android:text="@string/settingsxml_head"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+    <!-- User profile section -->
+
+    <TextView
+        android:id="@+id/textViewProfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="@string/user_profile"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/username_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/username_settings"
+        android:inputType="text"
+        android:maxLines="1"
+        android:padding="12dp" />
+
+    <EditText
+        android:id="@+id/password_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/password_settings"
+        android:inputType="textPassword"
+        android:maxLines="1"
+        android:padding="12dp" />
+
+    <!-- Notification preferences section -->
+    <Button
+        android:id="@+id/save_profile_button"
+        android:layout_width="170dp"
+        android:layout_height="66dp"
+        android:layout_marginTop="16dp"
+        android:padding="12dp"
+        android:text="@string/save_profile" />
+
+    <TextView
+        android:id="@+id/textViewNotifications"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="@string/notification_preferences"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <Switch
+        android:id="@+id/enable_notifications_switch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:minHeight="48dp"
+        android:padding="12dp"
+        android:text="Enable Notifications"
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+</LinearLayout>
