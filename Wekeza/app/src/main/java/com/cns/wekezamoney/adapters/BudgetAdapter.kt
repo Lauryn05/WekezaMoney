@@ -2,11 +2,10 @@
 package com.cns.wekezamoney.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.cns.wekezamoney.model.Budget
 import com.cns.wekezamoney.R
+import com.cns.wekezamoney.model.Budget
 
 class BudgetAdapter(private val budgetList: List<Budget>) : RecyclerView.Adapter<BudgetViewHolder>() {
 

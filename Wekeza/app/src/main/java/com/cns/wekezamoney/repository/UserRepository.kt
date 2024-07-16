@@ -20,12 +20,11 @@ class UserRepository(private val userDao: UserDao) {
     }
 
     suspend fun disableNotifications(userId: Long): Int {
-        val notification = Notification(userId, false)
-        return userDao.updateNotification(notification)
+        return userDao.updateNotification(userId, false)
     }
 
     suspend fun areNotificationsEnabled(userId: Long): Boolean {
-        return userDao.areNotificationsEnabled(userId) ?: false
+        return userDao.areNotificationsEnabled(userId)
     }
 
     suspend fun updateUser(user: User): Int {
@@ -34,5 +33,13 @@ class UserRepository(private val userDao: UserDao) {
 
     suspend fun getUserById(userId: Long): User? {
         return userDao.getUserById(userId)
+    }
+
+    suspend fun insertNotification(notification: Notification): Long {
+        return userDao.insertNotification(notification)
+    }
+
+    suspend fun deleteNotification(userId: Long): Int {
+        return userDao.deleteNotification(userId)
     }
 }

@@ -1,6 +1,8 @@
 package com.cns.wekezamoney
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
@@ -28,6 +30,9 @@ class LoginActivity : AppCompatActivity() {
 
             userViewModel.checkUser(username, password) { user ->
                 if (user != null) {
+                    // Save user ID to SharedPreferences
+                    saveCurrentUserId(user.id)
+
                     // Login successful, proceed to main activity or dashboard
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
@@ -39,5 +44,12 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun saveCurrentUserId(userId: Long) {
+        val sharedPreferences: SharedPreferences = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putLong("currentUserId", userId)
+        editor.apply()
     }
 }

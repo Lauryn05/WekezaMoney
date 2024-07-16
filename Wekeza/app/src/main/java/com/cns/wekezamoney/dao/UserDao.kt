@@ -25,9 +25,9 @@ interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertNotification(notification: Notification): Long
 
-    @Query("UPDATE notifications SET enabled = 1 WHERE userId = :userId")
-    suspend fun enableNotifications(userId: Long): Int
+    @Query("UPDATE notifications SET enabled = :enabled WHERE userId = :userId")
+    suspend fun updateNotification(userId: Long, enabled: Boolean): Int
 
-    @Query("UPDATE notifications SET enabled = 0 WHERE userId = :userId")
-    suspend fun disableNotifications(userId: Long): Int
+    @Query("DELETE FROM notifications WHERE userId = :userId")
+    suspend fun deleteNotification(userId: Long): Int
 }

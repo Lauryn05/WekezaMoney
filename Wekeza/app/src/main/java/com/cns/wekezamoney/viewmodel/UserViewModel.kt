@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.cns.wekezamoney.model.User
+import com.cns.wekezamoney.model.Notification
 import com.cns.wekezamoney.repository.UserRepository
 import kotlinx.coroutines.launch
 
@@ -25,21 +26,22 @@ class UserViewModel(private val userRepository: UserRepository) : ViewModel() {
 
     fun enableNotifications(userId: Long, onResult: (Long) -> Unit) {
         viewModelScope.launch {
-            val result = userRepository.enableNotifications(userId.toInt())
+            val notification = Notification(userId, true)
+            val result = userRepository.insertNotification(notification)
             onResult(result)
         }
     }
 
     fun disableNotifications(userId: Long, onResult: (Int) -> Unit) {
         viewModelScope.launch {
-            val result = userRepository.disableNotifications(userId.toInt())
+            val result = userRepository.deleteNotification(userId)
             onResult(result)
         }
     }
 
     fun areNotificationsEnabled(userId: Long, onResult: (Boolean) -> Unit) {
         viewModelScope.launch {
-            val result = userRepository.areNotificationsEnabled(userId.toInt())
+            val result = userRepository.areNotificationsEnabled(userId)
             onResult(result)
         }
     }

@@ -8,7 +8,7 @@ import com.cns.wekezamoney.dao.UserDao
 import com.cns.wekezamoney.model.User
 import com.cns.wekezamoney.model.Notification
 
-@Database(entities = [User::class, Notification::class], version = 2)
+@Database(entities = [User::class, Notification::class], version = 2, exportSchema = false)
 abstract class UserDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
@@ -23,7 +23,7 @@ abstract class UserDatabase : RoomDatabase() {
                     context.applicationContext,
                     UserDatabase::class.java,
                     "wekeza_db"
-                )
+                ).fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance
                 instance
