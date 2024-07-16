@@ -1,5 +1,6 @@
 package com.cns.wekezamoney
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
@@ -28,8 +29,8 @@ class LoginActivity : AppCompatActivity() {
             userViewModel.checkUser(username, password) { user ->
                 if (user != null) {
                     // Login successful, proceed to main activity or dashboard
-                    // val intent = Intent(this, MainActivity::class.java)
-                    // startActivity(intent)
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
                     finish() // Close login activity
                 } else {
                     // Handle incorrect username/password scenario

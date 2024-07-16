@@ -14,18 +14,18 @@ class UserRepository(private val userDao: UserDao) {
         return userDao.checkUser(username, password)
     }
 
-    suspend fun enableNotifications(userId: Int): Long {
-        val notification = Notification(userId.toLong(), true)
+    suspend fun enableNotifications(userId: Long): Long {
+        val notification = Notification(userId, true)
         return userDao.insertNotification(notification)
     }
 
-    suspend fun disableNotifications(userId: Int): Int {
-        val notification = Notification(userId.toLong(), false)
+    suspend fun disableNotifications(userId: Long): Int {
+        val notification = Notification(userId, false)
         return userDao.updateNotification(notification)
     }
 
-    suspend fun areNotificationsEnabled(userId: Int): Boolean {
-        return userDao.areNotificationsEnabled(userId.toLong())
+    suspend fun areNotificationsEnabled(userId: Long): Boolean {
+        return userDao.areNotificationsEnabled(userId) ?: false
     }
 
     suspend fun updateUser(user: User): Int {

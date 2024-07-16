@@ -1,46 +1,50 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">WekezaMoney</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_title" tools:ignore="MissingTranslation">Android Studio</string>
+    <string name="nav_header_subtitle" tools:ignore="MissingTranslation">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
-    <string name="amount_placeholder">5000</string>
-    <string name="home">Home</string>
+    <string name="amount_placeholder" tools:ignore="MissingTranslation">5000</string>
+    <string name="home" tools:ignore="MissingTranslation">Home</string>
     <string name="name">Name</string>
-    <string name="email">Email</string>
+    <string name="email" tools:ignore="MissingTranslation">Email</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
-    <string name="done">Done</string>
-    <string name="add_budget">Add Budget</string>
+    <string name="done" tools:ignore="MissingTranslation">Done</string>
+    <string name="add_budget" tools:ignore="MissingTranslation">Add Budget</string>
     <string name="amount">Amount</string>
     <string name="budget_name">Budget Name</string>
-    <string name="budget">Budget</string>
-    <string name="goals">Goals</string>
-    <string name="expenses">Expenses</string>
-    <string name="settings">Settings</string>
-    <string name="AppName">WekezaMoney</string>
-    <string name="notification_preferences">Notification Preferences</string>
+    <string name="budget" tools:ignore="MissingTranslation">Budget</string>
+    <string name="goals" tools:ignore="MissingTranslation">Goals</string>
+    <string name="expenses" tools:ignore="MissingTranslation">Expenses</string>
+    <string name="AppName" tools:ignore="MissingTranslation">WekezaMoney</string>
+    <string name="notification_preferences" tools:ignore="MissingTranslation">Notification Preferences</string>
     <string name="user_profile">User Profile</string>
-    <string name="log_in">Log In</string>
-    <string name="username_login">Username</string>
-    <string name="password_login">Password</string>
-    <string name="done_login">Done</string>
+    <string name="log_in" tools:ignore="MissingTranslation">Log In</string>
+    <string name="username_login" tools:ignore="MissingTranslation">Username</string>
+    <string name="password_login" tools:ignore="MissingTranslation">Password</string>
+    <string name="done_login" tools:ignore="MissingTranslation">Done</string>
     <string name="expense_name">Expense Name</string>
-    <string name="amount_expense">Amount</string>
+    <string name="amount_expense" tools:ignore="MissingTranslation">Amount</string>
     <string name="add_expense">Add Expense</string>
-    <string name="username_settings">Username</string>
-    <string name="password_settings">Password</string>
+    <string name="username_settings" tools:ignore="MissingTranslation">Username</string>
+    <string name="password_settings" tools:ignore="MissingTranslation">Password</string>
     <string name="save_profile">Save Profile</string>
-    <string name="settingsxml_head">Settings</string>
+    <string name="settingsxml_head" tools:ignore="MissingTranslation">Settings</string>
     <string name="goal_name">Goal Name</string>
-    <string name="amount_goal">Amount</string>
+    <string name="amount_goal" tools:ignore="MissingTranslation">Amount</string>
     <string name="add_goal">Add Goal</string>
-    <string name="invalid_credentials">Invalid credentials</string>
-    <string name="registration_failed">Registration failed</string>
+    <string name="invalid_credentials" tools:ignore="MissingTranslation">Invalid credentials</string>
+    <string name="registration_failed" tools:ignore="MissingTranslation">Registration failed</string>
+    <string name="welcome_to_wekeza_money" tools:ignore="MissingTranslation">Welcome to Wekeza Money</string>
+    <string name="register" tools:ignore="MissingTranslation">Register</string>
+    <string name="login_onboard" tools:ignore="MissingTranslation">Login</string>
+    <string name="enable_notifications" tools:ignore="MissingTranslation">Enable Notifications</string>
+    <string name="settings">Settings</string>
 </resources>
