@@ -1,4 +1,3 @@
-// BudgetAdapter.kt
 package com.cns.wekezamoney.adapters
 
 import android.view.LayoutInflater
