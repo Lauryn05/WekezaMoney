@@ -20,15 +20,16 @@ class DashboardActivity : AppCompatActivity() {
     private lateinit var navView: NavigationView
     private lateinit var toolbar: Toolbar
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
 
+        // Initialize toolbar
+        toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+
         drawerLayout = findViewById(R.id.drawer_layout)
         navView = findViewById(R.id.nav_view)
-
-        setSupportActionBar(findViewById(R.id.toolbar))
 
         // Setup navigation drawer
         setupNavigationDrawer()

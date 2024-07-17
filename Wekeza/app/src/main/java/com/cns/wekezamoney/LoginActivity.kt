@@ -33,8 +33,8 @@ class LoginActivity : AppCompatActivity() {
                     // Save user ID to SharedPreferences
                     saveCurrentUserId(user.id)
 
-                    // Login successful, proceed to main activity or dashboard
-                    val intent = Intent(this, MainActivity::class.java)
+                    // Login successful, proceed to DashboardActivity
+                    val intent = Intent(this, DashboardActivity::class.java)
                     startActivity(intent)
                     finish() // Close login activity
                 } else {
