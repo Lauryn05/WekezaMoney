@@ -28,19 +28,24 @@ class LoginActivity : AppCompatActivity() {
             val username = binding.etUsername.text.toString().trim()
             val password = binding.etPassword.text.toString().trim()
 
-            userViewModel.checkUser(username, password) { user ->
-                if (user != null) {
-                    // Save user ID to SharedPreferences
-                    saveCurrentUserId(user.id)
+            if (username.isEmpty() || password.isEmpty()) {
+                binding.tvError.visibility = View.VISIBLE
+                binding.tvError.text = getString(R.string.fill_all_fields)
+            } else {
+                userViewModel.checkUser(username, password) { user ->
+                    if (user != null) {
+                        // Save user ID to SharedPreferences
+                        saveCurrentUserId(user.id)
 
-                    // Login successful, proceed to DashboardActivity
-                    val intent = Intent(this, DashboardActivity::class.java)
-                    startActivity(intent)
-                    finish() // Close login activity
-                } else {
-                    // Handle incorrect username/password scenario
-                    binding.tvError.visibility = View.VISIBLE
-                    binding.tvError.text = getString(R.string.invalid_credentials)
+                        // Login successful, proceed to DashboardActivity
+                        val intent = Intent(this, DashboardActivity::class.java)
+                        startActivity(intent)
+                        finish() // Close login activity
+                    } else {
+                        // Handle incorrect username/password scenario
+                        binding.tvError.visibility = View.VISIBLE
+                        binding.tvError.text = getString(R.string.invalid_credentials)
+                    }
                 }
             }
         }

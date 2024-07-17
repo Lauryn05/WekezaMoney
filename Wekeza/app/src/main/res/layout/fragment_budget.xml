@@ -5,6 +5,17 @@
     android:layout_height="match_parent"
     android:padding="16dp">
 
+
+    <TextView
+        android:id="@+id/textViewBudget"
+        android:layout_width="382dp"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="@string/budgetxml_head"
+        android:textSize="19sp"
+        android:textStyle="bold"
+        tools:ignore="MissingConstraints,TextSizeCheck" />
+
     <EditText
         android:id="@+id/budget_name"
         android:layout_width="match_parent"
@@ -28,12 +39,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/budget_amount"
+        android:layout_marginTop="5dp"
         android:text="@string/add_budget" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/budget_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="374dp"
+        android:layout_height="325dp"
         android:layout_below="@id/add_budget_button"
-        android:layout_marginTop="23dp" />
+        android:layout_marginTop="29dp" />
+
+    <TextView
+        android:id="@+id/total_budget"
+        android:layout_width="115dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/budget_list"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="336dp"
+        android:layout_marginEnd="23dp"
+        android:text="@string/total_budget"
+        android:textSize="18sp"
+        tools:ignore="MissingConstraints,TextSizeCheck"
+        tools:layout_editor_absoluteX="275dp"
+        tools:layout_editor_absoluteY="667dp" />
 </RelativeLayout>

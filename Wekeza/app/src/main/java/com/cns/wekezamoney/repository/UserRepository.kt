@@ -35,11 +35,4 @@ class UserRepository(private val userDao: UserDao) {
         return userDao.getUserById(userId)
     }
 
-    suspend fun insertNotification(notification: Notification): Long {
-        return userDao.insertNotification(notification)
-    }
-
-    suspend fun deleteNotification(userId: Long): Int {
-        return userDao.deleteNotification(userId)
-    }
 }

@@ -51,4 +51,17 @@
     <string name="delete_goal">delete_goal</string>
     <string name="goal_name_dialog">Goal Name</string>
     <string name="target_amount_dialog">Target Amount</string>
+    <string name="fill_all_fields">Please fill in all the fields</string>
+    <string name="expense_name_dialog">Expense Name</string>
+    <string name="expense_amount_dialog">Expense Amount</string>
+    <string name="budget_name_dialog">Budget Name</string>
+    <string name="budget_amount_dialog">Budget Amount</string>
+    <string name="expensexml_head">What have you spent on?</string>
+    <string name="total_expenses">Total: $0.00</string>
+    <string name="total_budget">Total: $0.00</string>
+    <string name="budgetxml_head">What are you planning on spending on?</string>
+    <string name="goalxml_head">What are you aiming for?</string>
+    <string name="total_goals">Total: 0.00</string>
+    <string name="current_amount_dialog">Current Amount</string>
+    <string name="current_amount">Current Amount saved towards goal</string>
 </resources>

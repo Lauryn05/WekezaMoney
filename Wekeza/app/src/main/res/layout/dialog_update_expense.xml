@@ -7,10 +7,10 @@
     android:padding="16dp">
 
     <EditText
-        android:id="@+id/dialog_goal_name"
+        android:id="@+id/dialog_expense_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/goal_name_dialog"
+        android:hint="@string/expense_name_dialog"
         android:inputType="text"
         android:maxLines="1"
         android:minHeight="48dp"
@@ -18,21 +18,10 @@
         tools:ignore="Autofill,VisualLintTextFieldSize" />
 
     <EditText
-        android:id="@+id/dialog_goal_amount"
+        android:id="@+id/dialog_expense_amount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/target_amount_dialog"
-        android:inputType="numberDecimal"
-        android:maxLines="1"
-        android:minHeight="48dp"
-        android:padding="8dp"
-        tools:ignore="Autofill,VisualLintTextFieldSize" />
-
-    <EditText
-        android:id="@+id/dialog_curr_amount"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/current_amount_dialog"
+        android:hint="@string/expense_amount_dialog"
         android:inputType="numberDecimal"
         android:maxLines="1"
         android:minHeight="48dp"

@@ -5,39 +5,63 @@
     android:layout_height="match_parent"
     android:padding="16dp">
 
+    <TextView
+        android:id="@+id/textViewExpense"
+        android:layout_width="366dp"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="@string/goalxml_head"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        tools:ignore="MissingConstraints" />
+
     <EditText
         android:id="@+id/goal_name"
-        android:layout_width="match_parent"
+        android:layout_width="382dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="87dp"
         android:autofillHints=""
         android:hint="@string/goal_name"
         tools:ignore="TextFields,TouchTargetSizeCheck,VisualLintTextFieldSize" />
+
+    <!-- Button to update a goal -->
 
     <EditText
         android:id="@+id/goal_amount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/goal_name"
-        android:layout_marginTop="9dp"
+        android:layout_marginTop="12dp"
         android:hint="@string/amount_goal"
         tools:ignore="Autofill,TextFields,TouchTargetSizeCheck,VisualLintTextFieldSize" />
+
+    <EditText
+        android:id="@+id/current_amount"
+        android:layout_width="377dp"
+        android:layout_height="47dp"
+        android:layout_below="@+id/goal_amount"
+        android:layout_marginTop="13dp"
+        android:hint="@string/current_amount"
+        android:minHeight="48dp"
+        tools:ignore="Autofill,TextFields,TouchTargetSizeCheck" />
 
     <Button
         android:id="@+id/add_goal_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/goal_amount"
+        android:layout_marginTop="73dp"
         android:text="@string/add_goal" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/goal_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/add_goal_button" />
+        android:layout_width="381dp"
+        android:layout_height="235dp"
+        android:layout_below="@id/add_goal_button"
+        android:layout_marginTop="5dp"
+        tools:ignore="TextSizeCheck" />
 
-    <!-- Button to update a goal -->
     <Button
         android:id="@+id/update_goal_button"
         android:layout_width="wrap_content"
@@ -58,5 +82,19 @@
         android:layout_toEndOf="@id/update_goal_button"
         android:text="@string/delete_goal"
         android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/total_goals"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/goal_list"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="26dp"
+        android:text="@string/total_goals"
+        android:textSize="18sp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="275dp"
+        tools:layout_editor_absoluteY="667dp" />
 
 </RelativeLayout>

@@ -8,7 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,7 +19,7 @@ import com.cns.wekezamoney.adapters.GoalAdapter
 import com.cns.wekezamoney.model.Goal
 import com.cns.wekezamoney.viewmodel.GoalViewModel
 
-class GoalFragment : BaseFragment() {
+class GoalFragment : Fragment() {
 
     private lateinit var goalName: EditText
     private lateinit var goalAmount: EditText
@@ -25,10 +27,11 @@ class GoalFragment : BaseFragment() {
     private lateinit var goalList: RecyclerView
     private lateinit var goalAdapter: GoalAdapter
     private val goalData: MutableList<Goal> = mutableListOf()
+    private lateinit var totalGoalsTextView: TextView
 
     private val viewModel: GoalViewModel by viewModels()
 
-    @SuppressLint("NotifyDataSetChanged")
+    @SuppressLint("NotifyDataSetChanged", "SetTextI18n", "MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,6 +42,7 @@ class GoalFragment : BaseFragment() {
         goalAmount = root.findViewById(R.id.goal_amount)
         addGoalButton = root.findViewById(R.id.add_goal_button)
         goalList = root.findViewById(R.id.goal_list)
+        totalGoalsTextView = root.findViewById(R.id.total_goals)
 
         goalAdapter = GoalAdapter(goalData)
         goalList.layoutManager = LinearLayoutManager(context)
@@ -49,6 +53,10 @@ class GoalFragment : BaseFragment() {
             goalData.clear()
             goalData.addAll(goals)
             goalAdapter.notifyDataSetChanged()
+        }
+
+        viewModel.totalGoals.observe(viewLifecycleOwner) { total ->
+            totalGoalsTextView.text = "Total: $$total"
         }
 
         // Add Goal button click listener
