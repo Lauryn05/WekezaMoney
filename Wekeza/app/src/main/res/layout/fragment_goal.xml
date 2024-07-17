@@ -36,4 +36,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/add_goal_button" />
+
+    <!-- Button to update a goal -->
+    <Button
+        android:id="@+id/update_goal_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/goal_list"
+        android:layout_marginTop="16dp"
+        android:text="@string/update_goal"
+        android:visibility="gone" />
+
+    <!-- Button to delete a goal -->
+    <Button
+        android:id="@+id/delete_goal_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/goal_list"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_toEndOf="@id/update_goal_button"
+        android:text="@string/delete_goal"
+        android:visibility="gone" />
+
 </RelativeLayout>

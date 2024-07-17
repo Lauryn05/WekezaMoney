@@ -2,8 +2,10 @@ package com.cns.wekezamoney.ui
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,18 +13,16 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Switch
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import com.cns.wekezamoney.OnboardingActivity
 import com.cns.wekezamoney.R
 import com.cns.wekezamoney.database.UserDatabase
 import com.cns.wekezamoney.model.User
 import com.cns.wekezamoney.repository.UserRepository
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 @OptIn(DelicateCoroutinesApi::class)
-class SettingsFragment : BaseFragment() {
+class SettingsFragment : Fragment() {
 
     private lateinit var usernameEditText: EditText
     private lateinit var passwordEditText: EditText
@@ -46,13 +46,9 @@ class SettingsFragment : BaseFragment() {
         val userDatabase = UserDatabase.getDatabase(requireContext()).userDao()
         userRepository = UserRepository(userDatabase)
 
-        // Retrieve the current user ID
         currentUserId = getCurrentUserId()
 
-        // Load user profile information
         loadUserProfile()
-
-        // Load notification preferences
         loadNotificationPreferences()
 
         saveProfileButton.setOnClickListener {
@@ -60,7 +56,6 @@ class SettingsFragment : BaseFragment() {
             val password = passwordEditText.text.toString().trim()
 
             if (username.isNotEmpty() && password.isNotEmpty()) {
-                // Update user profile in database
                 updateUserProfile(username, password)
             } else {
                 Toast.makeText(requireContext(), "Username and password cannot be empty", Toast.LENGTH_SHORT).show()
@@ -69,12 +64,14 @@ class SettingsFragment : BaseFragment() {
 
         enableNotificationsSwitch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                // Enable notifications
                 enableNotifications()
             } else {
-                // Disable notifications
                 disableNotifications()
             }
+        }
+
+        root.findViewById<Button>(R.id.logout_button).setOnClickListener {
+            logoutUser()
         }
 
         return root
@@ -87,10 +84,14 @@ class SettingsFragment : BaseFragment() {
 
     private fun loadUserProfile() {
         GlobalScope.launch(Dispatchers.Main) {
-            val currentUser = getCurrentUser()
-            currentUser?.let {
-                usernameEditText.setText(it.username)
-                passwordEditText.setText(it.password)
+            try {
+                val currentUser = getCurrentUser()
+                currentUser?.let {
+                    usernameEditText.setText(it.username)
+                    passwordEditText.setText(it.password)
+                }
+            } catch (e: Exception) {
+                Log.e("SettingsFragment", "Error loading user profile", e)
             }
         }
     }
@@ -103,12 +104,19 @@ class SettingsFragment : BaseFragment() {
 
     private fun updateUserProfile(username: String, password: String) {
         GlobalScope.launch(Dispatchers.IO) {
-            val rowsUpdated = userRepository.updateUser(User(currentUserId, username, password))
-            withContext(Dispatchers.Main) {
-                if (rowsUpdated > 0) {
-                    Toast.makeText(requireContext(), "Profile updated successfully", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(requireContext(), "Failed to update profile", Toast.LENGTH_SHORT).show()
+            try {
+                val rowsUpdated = userRepository.updateUser(User(currentUserId, username, password))
+                withContext(Dispatchers.Main) {
+                    if (rowsUpdated > 0) {
+                        Toast.makeText(requireContext(), "Profile updated successfully", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(requireContext(), "Failed to update profile", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    Log.e("SettingsFragment", "Error updating user profile", e)
+                    Toast.makeText(requireContext(), "Error updating profile", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -116,21 +124,32 @@ class SettingsFragment : BaseFragment() {
 
     private fun loadNotificationPreferences() {
         GlobalScope.launch(Dispatchers.Main) {
-            val notificationsEnabled = withContext(Dispatchers.IO) {
-                userRepository.areNotificationsEnabled(currentUserId)
+            try {
+                val notificationsEnabled = withContext(Dispatchers.IO) {
+                    userRepository.areNotificationsEnabled(currentUserId)
+                }
+                enableNotificationsSwitch.isChecked = notificationsEnabled
+            } catch (e: Exception) {
+                Log.e("SettingsFragment", "Error loading notification preferences", e)
             }
-            enableNotificationsSwitch.isChecked = notificationsEnabled
         }
     }
 
     private fun enableNotifications() {
         GlobalScope.launch(Dispatchers.IO) {
-            val rowsUpdated = userRepository.enableNotifications(currentUserId)
-            withContext(Dispatchers.Main) {
-                if (rowsUpdated > 0) {
-                    Toast.makeText(requireContext(), "Notifications enabled", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(requireContext(), "Failed to enable notifications", Toast.LENGTH_SHORT).show()
+            try {
+                val rowsUpdated = userRepository.enableNotifications(currentUserId)
+                withContext(Dispatchers.Main) {
+                    if (rowsUpdated > 0) {
+                        Toast.makeText(requireContext(), "Notifications enabled", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(requireContext(), "Failed to enable notifications", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    Log.e("SettingsFragment", "Error enabling notifications", e)
+                    Toast.makeText(requireContext(), "Error enabling notifications", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -138,14 +157,31 @@ class SettingsFragment : BaseFragment() {
 
     private fun disableNotifications() {
         GlobalScope.launch(Dispatchers.IO) {
-            val rowsUpdated = userRepository.disableNotifications(currentUserId)
-            withContext(Dispatchers.Main) {
-                if (rowsUpdated > 0) {
-                    Toast.makeText(requireContext(), "Notifications disabled", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(requireContext(), "Failed to disable notifications", Toast.LENGTH_SHORT).show()
+            try {
+                val rowsUpdated = userRepository.disableNotifications(currentUserId)
+                withContext(Dispatchers.Main) {
+                    if (rowsUpdated > 0) {
+                        Toast.makeText(requireContext(), "Notifications disabled", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(requireContext(), "Failed to disable notifications", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    Log.e("SettingsFragment", "Error disabling notifications", e)
+                    Toast.makeText(requireContext(), "Error disabling notifications", Toast.LENGTH_SHORT).show()
                 }
             }
         }
+    }
+
+    private fun logoutUser() {
+        // Clear current user ID from SharedPreferences
+        val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+        sharedPreferences.edit().remove("currentUserId").apply()
+
+        // Navigate back to OnboardingActivity
+        startActivity(Intent(requireContext(), OnboardingActivity::class.java))
+        requireActivity().finish() // Close current activity after logout
     }
 }

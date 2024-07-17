@@ -8,11 +8,13 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cns.wekezamoney.R
 import com.cns.wekezamoney.adapters.BudgetAdapter
 import com.cns.wekezamoney.model.Budget
+import com.cns.wekezamoney.viewmodel.BudgetViewModel
 
 class BudgetFragment : BaseFragment() {
 
@@ -22,6 +24,8 @@ class BudgetFragment : BaseFragment() {
     private lateinit var budgetList: RecyclerView
     private lateinit var budgetAdapter: BudgetAdapter
     private val budgetData: MutableList<Budget> = mutableListOf()
+
+    private val viewModel: BudgetViewModel by viewModels()
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(
@@ -39,14 +43,19 @@ class BudgetFragment : BaseFragment() {
         budgetList.layoutManager = LinearLayoutManager(context)
         budgetList.adapter = budgetAdapter
 
+        viewModel.allBudgets.observe(viewLifecycleOwner) { budgets ->
+            budgetData.clear()
+            budgetData.addAll(budgets)
+            budgetAdapter.notifyDataSetChanged()
+        }
+
         addBudgetButton.setOnClickListener {
             val name = budgetName.text.toString()
             val amount = budgetAmount.text.toString()
             if (name.isNotEmpty() && amount.isNotEmpty()) {
                 try {
-                    val budget = Budget(name, amount.toDouble())
-                    budgetData.add(budget)
-                    budgetAdapter.notifyDataSetChanged()
+                    val budget = Budget(name = name, amount = amount.toDouble())
+                    viewModel.insertBudget(budget)
                 } catch (e: NumberFormatException) {
                     Toast.makeText(requireContext(), "Invalid budget amount format", Toast.LENGTH_SHORT).show()
                 }
