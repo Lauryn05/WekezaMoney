@@ -5,26 +5,46 @@
     <string name="navigation_drawer_close">Funga droo ya kusogeza</string>
     <string name="nav_header_desc">Kichwa cha urambazaji</string>
     <string name="action_settings">Mipangilio</string>
+
     <string name="menu_home">Nyumbani</string>
     <string name="menu_gallery">Picha</string>
     <string name="menu_slideshow">Onyesho la slaidi la menyu</string>
+    <string name="home">Nyumbani</string>
     <string name="username">Jina la mtumiaji</string>
-    <string name="password">Neno siri</string>
-    <string name="finish" tools:ignore="ExtraTranslation">Maliza</string>
-    <string name="addBudget" tools:ignore="ExtraTranslation">Ongeza bajeti</string>
+    <string name="password">Nenosiri</string>
+    <string name="done">Maliza</string>
+    <string name="add_budget">Ongeza bajeti</string>
     <string name="amount">Kiasi</string>
     <string name="budget_name">Jina la bajeti</string>
-    <string name="Budget" tools:ignore="ExtraTranslation">Bajeti</string>
-    <string name="Goals" tools:ignore="ExtraTranslation">Malengo</string>
-    <string name="Expenses" tools:ignore="ExtraTranslation">Gharama</string>
-    <string name="Notification_preferences" tools:ignore="ExtraTranslation">Mapendeleo ya arifa</string>
-    <string name="user_profile">Wasifi wa mtumiaji</string>
-    <string name="login" tools:ignore="ExtraTranslation">Ingia</string>
+    <string name="budget">Bajeti</string>
+    <string name="goals">Malengo</string>
+    <string name="expenses">Gharama</string>
+    <string name="notification_preferences">Mapendeleo ya arifa</string>
+    <string name="user_profile">Wasifu wa mtumiaji</string>
+    <string name="log_in">Ingia</string>
+    <string name="username_login">Jina la mtumiaji</string>
+    <string name="password_login">Neno siri</string>
+    <string name="done_login">Kamilisha</string>
     <string name="name">Jina</string>
-    <string name="email_address" tools:ignore="ExtraTranslation">Barua pepe</string>
-    <string name="expense_name">Jina ya gharama</string>
+    <string name="email">Barua pepe</string>
+    <string name="expense_name">Jina la gharama</string>
+    <string name="amount_expense">Kiasi cha gharama</string>
     <string name="add_expense">Ongeza gharama</string>
+    <string name="username_settings">Mipangilio ya jina la mtumiaji</string>
+    <string name="password_settings">Mipangilio ya nenosiri</string>
     <string name="save_profile">Hifadhi wasifu</string>
+    <string name="settingsxml_head">Mipangilio</string>
     <string name="goal_name">Jina la lengo</string>
+    <string name="amount_goal">Kiasi cha lengo</string>
     <string name="add_goal">Ongeza lengo</string>
+    <string name="invalid_credentials">Vitambulisho batili</string>
+    <string name="registration_failed">Usajili umeshindwa</string>
+    <string name="welcome_to_wekeza_money">Karibu Wekeza Money</string>
+    <string name="register">Sajili</string>
+    <string name="login_onboard">Ingia</string>
+    <string name="enable_notifications">Wezesha arifa</string>
+    <string name="settings">Mipangilio</string>
+
+
+
 </resources>
